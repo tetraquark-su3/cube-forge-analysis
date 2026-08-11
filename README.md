@@ -108,7 +108,7 @@ silently go stale.
 
 ## Case study
 
-[`shadow_paper.pdf`](.shadow_paper.pdf) uses this pipeline on 100 drafts
+[`shadow_paper.pdf`](./shadow_paper.pdf) uses this pipeline on 100 drafts
 (2,800 matches) to test whether the `Shadow` keyword ability was intrinsically
 overpowered in one specific cube, or whether its apparent strength was an
 artifact of Forge's AI opponent under-utilizing blocking. Short version: an
