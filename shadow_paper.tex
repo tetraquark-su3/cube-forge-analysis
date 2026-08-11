@@ -1,0 +1,877 @@
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{multicol}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true, linkcolor=blue, urlcolor=blue, citecolor=blue}
+
+\title{Evasion Without Answers: An Empirical Study of the \emph{Shadow} \\
+Keyword's Win-Rate Premium in a Custom \emph{Magic: The Gathering} Cube}
+
+\author{
+  \textit{[Your name here]} \\
+  \small Independent cube design project
+}
+\date{August 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We investigate whether the \emph{Shadow} keyword ability -- an evasion mechanic under
+which affected creatures can be blocked only by other Shadow creatures -- produces a
+disproportionate competitive advantage in a custom, 360-card ``old-border'' retro cube
+for \emph{Magic: The Gathering}. Combining automated draft simulation
+(CubeCobra) with automated head-to-head match simulation (the open-source \emph{Forge}
+game engine), we generated 100 eight-player drafts and played out the resulting
+2{,}800 round-robin matches. An initial diagnosis on a 10-draft pilot sample suggested
+that Shadow's apparent strength might be an artifact of the game engine's own
+under-blocking behavior (mean legal-blocking rate $\approx 17$--$21\%$) rather than a
+property of the mechanic itself. Reconstructing true legal blocking opportunities from
+raw match logs and correlating them against Shadow-deck win rate on the full
+100-draft corpus overturns this hypothesis: the correlation collapses from
+$r=+0.689$ ($n=10$) to $r \approx +0.07$--$0.10$ ($n=91$--$180$, all
+$p>0.27$) and is never negative, which is the opposite of the signature a
+blocking-artifact explanation would predict. Decks whose winning seat carries at
+least one Shadow card win $57\%$ of the 100 drafts studied. Cross-tabulating win
+rate by color count and Shadow presence isolates two additive, statistically
+independent effects: mono-color consistency contributes roughly $+5$ to $+7$
+percentage points, while Shadow contributes an additional $+21$ to $+22$ points
+regardless of color count ($p<10^{-15}$ for all four pairwise comparisons). We
+conclude that Shadow's advantage in this specific cube's card pool is intrinsic
+to the mechanic rather than an artifact of simulated-opponent blocking behavior,
+while explicitly noting the observational (non-causal) nature of the evidence and
+the small amount of corroborating human playtest data currently available.
+\end{abstract}
+
+\section{Introduction}
+
+Cube design -- the construction of a large, singleton card pool intended for repeated
+limited-format drafting -- is typically iterated on through subjective playtesting and
+community consensus rather than controlled measurement. Claims that a given card or
+mechanic is ``too strong'' are common in cube design communities but are rarely
+backed by match-level data, in part because generating enough games to say anything
+statistically meaningful about a specific card is prohibitively time-consuming for
+human playtesters.
+
+This paper documents an attempt to close that gap for one specific, falsifiable
+question that arose during the iterative construction of a 360-card retro-styled cube
+(pre-2003 card frame, or officially reprinted in that frame by more recent products):
+\emph{does the Shadow keyword confer a win-rate advantage large enough to warrant a
+design change, and if so, is that advantage a property of the mechanic itself or an
+artifact of the automated opponent used to generate match data?}
+
+Shadow is a static evasion ability first introduced in \emph{Tempest} (1997): a
+creature with Shadow ``can block or be blocked by only creatures with shadow.''
+Unlike flying or other partial-evasion keywords, a deck with zero Shadow creatures of
+its own has \emph{no legal way to block} a Shadow attacker under any circumstance,
+independent of board state. This unconditional character makes Shadow a natural
+candidate for producing an inflated win rate specifically against an AI opponent that
+under-utilizes blocking in general, since a general blocking weakness would be
+invisible against Shadow (there is nothing to fail to do) while being fully exposed
+against ordinary evasion-free creatures. Distinguishing ``Shadow is intrinsically
+strong'' from ``the simulator cannot punish Shadow's downside-free evasion'' is
+therefore the central methodological problem this paper addresses.
+
+\section{The Cube and Simulation Pipeline}
+
+\subsection{Card pool}
+
+The cube under study contains 360 non-land cards drafted from Magic sets released
+through late 2003, supplemented by mechanically newer cards later reprinted in an
+official ``retro'' or ``old-border'' card frame (e.g. \emph{Time Spiral Remastered},
+\emph{Ravnica Remastered}, \emph{Modern Horizons 2/3}, \emph{Innistrad Remastered},
+\emph{The Brothers' War: Retro Frame Artifacts}), so that every physical card in the
+eventual paper cube shares a consistent pre-2003 visual frame regardless of the
+card's original mechanical release date. The cube's intended paper-draft format
+allocates a 20-card mana-fixing pool (ten historical pain lands and their
+corresponding ten guildgates) to a separate secondary land-draft phase, distinct
+from the 360-card main pool. \emph{The CubeCobra-simulated corpus analyzed in this
+paper does not implement this separation}: CubeCobra's bot-drafting simulator has
+no mechanism for a secondary land sub-draft, so all 380 cards -- fixing lands
+included -- were drafted as ordinary pack contents in a single undifferentiated
+pool. This is a genuine divergence between the simulated environment analyzed here
+and the cube's intended real-world paper format, discussed further in \S4.2. The cube supports both traditional one-versus-one and free-for-all (FFA)
+multiplayer play; it was not designed with either format as an explicit priority,
+and its playtesting history to date happens to have started with FFA sessions for
+circumstantial rather than design reasons. The 8-player, one-versus-one
+round-robin format used to generate the simulation data analyzed here is
+consequently a legitimate target format in its own right, not merely a
+simulation-driven compromise against an FFA-first design -- though it is also, separately,
+the more practical format to simulate at scale, since Forge does not currently support
+multiplayer free-for-all simulation.
+
+\subsection{Draft simulation}
+
+Draft pools were generated using CubeCobra's bot-drafting simulator, which uses a
+learned per-card ``Elo'' rating and pack-signal heuristics to approximate human
+drafting behavior across an 8-seat pod. One hundred independent 8-player drafts were
+generated, yielding 800 constructed decks.
+
+\subsection{Match simulation}
+
+Each of the 800 decks was exported to Forge's native \texttt{.dck} format. Forge (an
+open-source, rules-complete \emph{Magic: The Gathering} engine with a scriptable AI
+opponent) was used to play a full round-robin within each 8-player draft pod
+(\(\binom{8}{2}=28\) single-game matches per draft, 2{,}800 matches total), invoked
+via Forge's headless \texttt{sim} command-line mode. Every match was logged at full
+verbosity (attack/block declarations, zone changes, stack resolutions, life totals).
+
+\subsection{Win-detection correction}
+
+An initial analysis pipeline determined match winners from three redundant log line
+patterns (\texttt{Match Winner -}, \texttt{Game Outcome: \dots{} has won}, and
+\texttt{\dots{} has won!}). Manual log inspection revealed that AI-vs-AI matches that
+reach Forge's per-game time limit (120{,}000\,ms) can emit two contradictory
+\texttt{Game Outcome: \dots{} has won} lines in immediate succession for a single
+game. Because the original pipeline credited whichever line it encountered first, at
+least one match result was misattributed to the losing seat rather than the winner.
+This was corrected by switching to the single, unambiguous \texttt{Match Result:
+\textless{}seat\textsubscript{1}\textgreater{}: \textless{}score\textsubscript{1}
+\textgreater{} \textless{}seat\textsubscript{2}\textgreater{}: \textless{}score
+\textsubscript{2}\textgreater{}} summary line, which appears exactly once per match.
+Across the full 100-draft corpus, 6 anomalous matches across 5 drafts were identified
+and correctly resolved this way (4 AI-timeout cases and one genuine simultaneous
+double-loss requiring a Forge-adjudicated replay game).
+
+\subsection{Legal blocking-rate reconstruction}
+
+A na\"ive count of \texttt{didn't block} log lines over-states the AI's blocking
+passivity, because it does not distinguish (a) turns on which the defending player
+controlled no creature at all, and (b) attacks that were legally unblockable given the
+defender's board (Shadow attackers facing a non-Shadow board; flying attackers facing
+a board with no flying or reach creature) from (c) genuine refusals to block a
+creature the defender could legally have blocked. We reconstructed per-player board
+state directly from the log by tracking creature-resolution and graveyard/exile
+zone-change events (card ownership is unambiguous in a singleton card pool) and
+cross-referenced attacker keywords against Forge's own card database (rather than a
+hand-curated list) to classify every non-block decision into one of these three
+categories. The \emph{legal blocking rate} is then defined as
+\[
+  \text{block\_rate} = \frac{\text{real\_block}}{\text{real\_block} +
+  \text{real\_nonblock}},
+\]
+i.e. blocks divided by blocks plus \emph{genuine} refusals, excluding both empty-board
+turns and legally-unblockable attacks from the denominator.
+
+\section{Results}
+
+\subsection{Blocking rate}
+
+Across the 100 drafts, the legal blocking rate averages $23.71\%$ (SD $=4.37$,
+range $13.36$--$34.29\%$). This is markedly higher than a na\"ive count would suggest
+(which, on early pilot data, understated the rate by roughly half), but confirms that
+Forge's AI opponent under-utilizes blocking relative to a competent human player in
+absolute terms.
+
+\subsection{Shadow dominance frequency}
+
+In 57 of the 100 drafts, the tournament-winning deck (highest match record in its
+8-player pod) carries at least one Shadow creature. Figure~\ref{fig:rank} shows the
+distribution of final standings across all 180 (draft, seat) pairs in which a deck
+carries at least one Shadow card: the modal outcome for a Shadow-carrying deck is an
+outright win, with a roughly monotonic decline in frequency at lower standings.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.62\textwidth]{fig_rank_distribution.pdf}
+  \caption{Final standing distribution for the 180 (draft, seat) pairs in which the
+  seat's deck contains at least one Shadow card, across 100 eight-player drafts.}
+  \label{fig:rank}
+\end{figure}
+
+\subsection{Blocking rate versus Shadow performance}
+
+An initial 3-draft pilot, followed by a 10-draft extension, found a strongly positive
+correlation ($r=+0.689$) between a draft's legal blocking rate and the win rate of its
+most Shadow-concentrated deck -- the \emph{opposite} sign to what an
+under-blocking-artifact explanation predicts (that hypothesis predicts $r<0$: less
+blocking should mechanically favor an unblockable attacker). Recomputing the same
+three cuts of the data on the full 100-draft corpus (Table~\ref{tab:corr}) collapses
+the correlation toward zero under every definition of ``the Shadow deck.''
+
+\begin{table}[h]
+\centering
+\caption{Pearson correlation between per-draft legal blocking rate and Shadow-deck
+win rate, for three ways of defining the relevant deck(s), on the 10-draft pilot
+versus the full 100-draft corpus.}
+\label{tab:corr}
+\small
+\begin{tabular}{p{5.6cm}ccc}
+\toprule
+Definition of ``Shadow deck'' & $n$ (100-draft) & $r$ (10-draft pilot) & $r$, $p$
+(100-draft) \\
+\midrule
+Single most Shadow-concentrated deck per draft & 99 & $+0.689$ & $+0.073$, $p=0.47$ \\
+All seats carrying $\geq 1$ Shadow card (splash included) & 180 & $+0.152$ & $+0.081$, $p=0.28$ \\
+Seats with a concentrated package ($\geq 2$ distinct Shadow cards) & 91 & $+0.384$ & $+0.099$, $p=0.35$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+None of the three 100-draft correlations is statistically distinguishable from zero.
+Two individual drafts illustrate the pattern directly: \emph{draft\_54} has the
+highest legal blocking rate in the entire corpus ($34.29\%$) and is nonetheless won by
+a Shadow-carrying deck; \emph{draft\_100} has the lowest blocking rate in the corpus
+($13.36\%$) and is won by a deck with zero Shadow cards. If the AI's general
+under-blocking were the primary driver of Shadow's success, both cases should run in
+the opposite direction.
+
+\subsection{Color count, Shadow, and win rate}
+
+Table~\ref{tab:crosstab} pools match results across all 800 decks by color count
+(mono- versus multi-color, decks whose archetype label did not resolve to an
+identifiable color count are reported separately and excluded from the comparisons
+below) crossed with the presence or absence of at least one Shadow card in the
+deck's registered card list.
+
+\begin{table}[h]
+\centering
+\caption{Pooled match win rate by color count and Shadow presence (2-proportion
+$z$-test against the same color-count group without Shadow).}
+\label{tab:crosstab}
+\begin{tabular}{lrrrc}
+\toprule
+Group & Decks & W/M & Win rate & vs.\ no-Shadow, same color count \\
+\midrule
+Mono-color, without Shadow   & 250 & 842/1750  & $48.11\%$ & -- (baseline) \\
+Mono-color, with Shadow      & 116 & 569/812   & $70.07\%$ & $z=10.40$, $p=2.6\times10^{-25}$ \\
+Multi-color, without Shadow  & 345 & 1032/2415 & $42.73\%$ & -- (baseline) \\
+Multi-color, with Shadow     & 64  & 284/448   & $63.39\%$ & $z=8.06$,  $p=7.7\times10^{-16}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.62\textwidth]{fig_mono_shadow_crosstab.pdf}
+  \caption{Pooled win rate by color count and Shadow presence ($n=2{,}562$ mono-color
+  and $n=2{,}863$ multi-color matches in total). Error bars are omitted for
+  legibility; all four pairwise gaps in Table~\ref{tab:crosstab} and
+  Table~\ref{tab:additive} are significant at $p<0.05$.}
+  \label{fig:crosstab}
+\end{figure}
+
+Table~\ref{tab:additive} decomposes the same four cells into two candidate effects: a
+mono-color consistency premium (comparing mono to multi-color \emph{within} the same
+Shadow status) and a Shadow premium (comparing with- to without-Shadow \emph{within}
+the same color-count class).
+
+\begin{table}[h]
+\centering
+\caption{Decomposition into a mono-color effect and a Shadow effect.}
+\label{tab:additive}
+\begin{tabular}{lrc}
+\toprule
+Comparison & $\Delta$ (points) & significance \\
+\midrule
+Mono $-$ Multi, without Shadow (``mono premium'', baseline) & $+5.38$ & $p=5.7\times10^{-4}$ \\
+Mono $-$ Multi, with Shadow (``mono premium'', with Shadow) & $+6.68$ & $p=1.5\times10^{-2}$ \\
+With $-$ without Shadow, mono-color (``Shadow premium'', mono) & $+21.96$ & $p=2.6\times10^{-25}$ \\
+With $-$ without Shadow, multi-color (``Shadow premium'', multi) & $+20.66$ & $p=7.7\times10^{-16}$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Both the mono-color premium and the Shadow premium are individually significant and
+of comparable magnitude regardless of the level of the other factor, indicating the
+two effects are close to independent. A purely additive model
+($\text{mono}\_\text{noShadow} + \Delta_{\text{Shadow}} + \Delta_{\text{mono}}$)
+over-predicts the mono-with-Shadow cell by roughly 4 percentage points
+($74.15\%$ predicted vs.\ $70.07\%$ observed), consistent with mild ceiling
+compression as combined win rate approaches its upper bound rather than a
+qualitatively different interaction. In all four comparisons, the Shadow effect
+($\approx+21$ points) is three to four times larger in magnitude than the color-count
+effect ($\approx+5$--$7$ points).
+
+\section{Discussion}
+
+\subsection{Interpretation}
+
+The central finding is a dissociation between two candidate explanations for
+Shadow's apparent strength that were, prior to this analysis, difficult to
+distinguish from qualitative play testing alone. An under-blocking-artifact
+account predicts that Shadow's advantage should shrink as the simulated
+opponent's legal blocking rate rises; the data show no such relationship at
+$n=100$, and the $n=10$ correlation that initially suggested one is better
+explained as small-sample noise given how completely it collapses on replication.
+The color-count crosstab further shows that Shadow's win-rate premium is not a
+proxy for the previously-hypothesized mana-consistency advantage of mono-color
+decks: both effects are present, of different magnitude, and largely additive.
+
+\subsection{Limitations}
+
+The evidence remains observational. Shadow-carrying decks are not randomly
+assigned; they are the product of a drafting process in which a human or bot
+drafter chose to commit to the archetype, and such decks may differ from
+non-Shadow decks along dimensions other than the presence of Shadow cards
+themselves (e.g. overall card quality of the surrounding shell, curve, or
+removal density) that were not controlled for here. The finding that Shadow's
+premium is stable across the mono/multi-color split partially addresses this
+concern by ruling out one specific confound, but does not rule out others.
+
+Separately, Forge's AI opponent's general under-blocking behavior
+($\bar{x}=23.71\%$ legal blocking rate) remains a genuine simulation-fidelity
+concern independent of the Shadow question: a rate this low likely inflates the
+absolute win rate of \emph{any} aggressive or evasive strategy relative to
+human play, even where (as shown here) it does not differentially explain
+Shadow's specific advantage over other mechanics. The single available human
+playtest data point for this cube (a two-player match between a Boros aggro
+deck and a Golgari midrange deck, won 2--1 by the aggro deck) is consistent
+with, but far too small a sample to independently confirm, the direction of
+this general concern.
+
+Finally, all data reported here come from 1-versus-1 round-robin play. The cube
+supports both 1v1 and free-for-all (FFA) multiplayer without a strict design
+preference for either (\S2.1), so this is not a mismatch against some other
+``intended'' format -- but several mechanics evaluated qualitatively during this
+project's design process (symmetric life-total taxes, edict effects, board-wide
+damage sources) are known to behave differently between 1v1 and FFA regardless,
+and we make no claim that Shadow's measured premium transfers unchanged to FFA
+play specifically.
+
+A related and more consequential divergence concerns mana fixing, and it bears
+specifically on the mono-color premium reported in \S3.4 rather than on the
+Shadow finding. Because the simulated corpus drafted all 20 fixing lands as
+ordinary pack contents (\S2.1) rather than through the cube's intended separate
+land draft, a multi-color deck in this corpus had to spend some of its limited
+picks on fixing lands that a mono-color deck could skip entirely in favor of an
+additional spell. This creates a plausible drafting-mechanism confound distinct
+from any genuine in-game mana-consistency advantage: part of the measured
+$+5$--$7$ point mono-color premium (Table~\ref{tab:additive}) could reflect
+multi-color decks being systematically diluted with lower-impact picks by the
+drafting process itself, rather than (or in addition to) mono-color decks
+benefiting from more reliable mana during play.
+
+We tested this directly on the existing corpus rather than leaving it as an open
+question. Restricting to the 403 strictly two-color decks (a subset of the
+409-deck bi/tri-color group in Table~\ref{tab:crosstab}, which also includes 6
+three-color decks), we counted how many of the cube's 20 dedicated fixing lands
+each deck's registered card list actually contained and tested this count against
+win rate (Table~\ref{tab:fixingtiers}).
+
+\begin{table}[h]
+\centering
+\caption{Two-color decks only: pooled win rate by number of dedicated fixing
+lands drafted (0 of 20, 1--2, or 3 or more). Pearson correlation across all 403
+decks: $r=-0.003$, $p=0.96$.}
+\label{tab:fixingtiers}
+\begin{tabular}{lrrr}
+\toprule
+Fixing lands in deck & Decks & Matches (W/M) & Win rate \\
+\midrule
+0  & 30  & 90/210    & $42.86\%$ \\
+1--2 & 357 & 1170/2499 & $46.82\%$ \\
+3+ & 16  & 42/112    & $37.50\%$ \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+We find no relationship between fixing-land count and win rate: the correlation
+is indistinguishable from zero, and win rate does not decline monotonically with
+more fixing lands drafted (the 1--2 tier outperforms the 0 tier, the opposite of
+what the opportunity-cost hypothesis predicts). The 3+ tier's lower rate is based
+on only 16 decks and should not be over-interpreted. This provides no support for
+the pick-opportunity-cost explanation of the mono-color premium; a genuine
+in-game mana-consistency advantage, or some other unmeasured factor, remains the
+more likely explanation, though we did not test those alternatives directly.
+Critically, this confound (supported or not) cannot explain the Shadow finding
+itself: the Shadow premium in Table~\ref{tab:additive} is measured \emph{within}
+each color-count stratum (mono-with- vs.\ mono-without-Shadow; multi-with- vs.\
+multi-without-Shadow), so any general pick-opportunity-cost effect from mixed
+land drafting would apply symmetrically to both terms of each comparison and
+cancel out of the estimated Shadow effect regardless. Whether the intended
+separate land draft remains worth its added setup complexity for a human table --
+independent of this statistical question -- is a design decision this paper does
+not attempt to settle.
+
+\subsection{Design implications}
+
+Taken together, the results support treating Shadow's competitive advantage in
+this cube as a property of the mechanic and card pool rather than an artifact
+of the specific automated opponent used to generate the data, and therefore as
+a legitimate candidate for a deliberate design intervention (reducing Shadow
+card density, adding dedicated answers, or removing the sub-theme) rather than
+something to be dismissed as a simulation quirk.
+
+\section{Conclusion}
+
+Across 100 automated drafts and 2{,}800 simulated matches, a Shadow-carrying deck
+wins its draft pod 57\% of the time, and carrying at least one Shadow card is
+associated with a win-rate premium of roughly 21 points, independent of the
+deck's color count and essentially uncorrelated with the simulated opponent's
+legal blocking rate ($|r|<0.10$ under three different data cuts, none
+significant). An initial small-sample analysis had suggested the opposite
+conclusion was plausible; replicating the analysis at ten times the sample size
+was sufficient to overturn it. We take this as a case study in why cube
+balance claims -- like most claims resting on a handful of observed games --
+benefit from exactly this kind of scale before being acted on.
+
+\section*{Acknowledgments}
+This analysis was conducted as part of an iterative, multi-assistant cube design
+process; log-parsing and simulation-pipeline code was developed and progressively
+corrected across sessions with several large language model assistants, including
+review and cross-checking of intermediate results between them. All numerical
+results in this paper were independently recomputed from the raw
+\texttt{shadow\_seats\_detail.csv}, \texttt{shadow\_vs\_blocking.csv}, and
+\texttt{mono\_vs\_shadow.csv} export files rather than taken from any single
+assistant's prior summary.
+
+\clearpage
+\appendix
+\section{Full card pool}
+\label{app:cardpool}
+
+The 360-card draftable pool at the time the 100-draft corpus analyzed in this paper was generated, listed by color/type category. One card added to the pool after data collection (\emph{Doubtless One}, White) is included below for completeness but does not appear in the per-card statistics reported in \S3--4, since it was never drafted into any of the 100 pools. The cube's intended paper format allocates a further 20-card pool (Table~\ref{tab:fixingpool}) to a separate secondary land draft; as noted in \S4.2, the simulated corpus analyzed in this paper does not implement that separation and drafted these 20 cards alongside the 360-card main pool instead.
+
+\subsection*{White (53)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Ajani's Pridemate
+\item Akroma's Vengeance
+\item Armageddon
+\item Arrest
+\item Aura of Silence
+\item Banishing Light
+\item Beloved Chaplain
+\item Benevolent Bodyguard
+\item Blinding Angel
+\item Condemn
+\item Decree of Justice
+\item Disenchant
+\item Doubtless One
+\item Enlightened Tutor
+\item Eternal Dragon
+\item Exile
+\item Gather the Townsfolk
+\item Glorious Anthem
+\item Glory
+\item Humble
+\item Intrepid Hero
+\item Knight of Dawn
+\item Land Tax
+\item Longbow Archer
+\item Lunarch Veteran
+\item Master Decoy
+\item Mentor of the Meek
+\item Mobilization
+\item Mother of Runes
+\item Order of Leitbur
+\item Order of the White Shield
+\item Orim's Prayer
+\item Pacifism
+\item Paladin en-Vec
+\item Path to Exile
+\item Savannah Lions
+\item Seal of Cleansing
+\item Serra Angel
+\item Shelter
+\item Soltari Champion
+\item Soltari Monk
+\item Soltari Trooper
+\item Soul Warden
+\item Stonehorn Dignitary
+\item Story Circle
+\item Swords to Plowshares
+\item Thraben Inspector
+\item True Believer
+\item Unquestioned Authority
+\item Weathered Wayfarer
+\item Whipcorder
+\item White Knight
+\item Wrath of God
+\end{itemize}
+\end{multicols}
+
+\subsection*{Blue (51)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Air Elemental
+\item Aquamoeba
+\item Boomerang
+\item Braingeyser
+\item Brainstorm
+\item Capsize
+\item Careful Study
+\item Circular Logic
+\item Clone
+\item Cloud of Faeries
+\item Cloudskate
+\item Counterspell
+\item Daze
+\item Deep Analysis
+\item Delver of Secrets
+\item Equilibrium
+\item Fact or Fiction
+\item Fade Away
+\item Forbid
+\item Force Spike
+\item Force of Will
+\item Frantic Search
+\item Great Whale
+\item Gush
+\item Impulse
+\item Man-o'-War
+\item Mana Breach
+\item Mana Leak
+\item Memory Lapse
+\item Merfolk Looter
+\item Mulldrifter
+\item Ninja of the Deep Hours
+\item Opposition
+\item Opt
+\item Peregrine Drake
+\item Ponder
+\item Propaganda
+\item Psionic Blast
+\item Repulse
+\item Rhystic Study
+\item Serendib Efreet
+\item Snap
+\item Snapcaster Mage
+\item Stormscape Familiar
+\item Stroke of Genius
+\item Thieving Magpie
+\item Thing in the Ice
+\item Time Warp
+\item Wall of Tears
+\item Wash Out
+\item Wonder
+\end{itemize}
+\end{multicols}
+
+\subsection*{Black (57)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Accursed Marauder
+\item Ashen Ghoul
+\item Black Knight
+\item Blood Artist
+\item Bone Shredder
+\item Cabal Archon
+\item Carnophage
+\item Carrion Feeder
+\item Chainer's Edict
+\item Coffin Purge
+\item Crypt Rats
+\item Dark Confidant
+\item Dark Ritual
+\item Darkness
+\item Dauthi Horror
+\item Dauthi Slayer
+\item Diabolic Edict
+\item Dismember
+\item Duress
+\item Exhume
+\item Faceless Butcher
+\item Fallen Angel
+\item Feed the Swarm
+\item Festering Goblin
+\item Gisa's Bidding
+\item Graveborn Muse
+\item Gravedigger
+\item Gray Merchant of Asphodel
+\item Gurmag Angler
+\item Hymn to Tourach
+\item Hypnotic Specter
+\item Innocent Blood
+\item Knight of Stromgald
+\item Lord of the Undead
+\item Mesmeric Fiend
+\item Mindslicer
+\item Nantuko Shade
+\item Necropotence
+\item Order of the Ebon Hand
+\item Phyrexian Arena
+\item Phyrexian Plaguelord
+\item Phyrexian Rager
+\item Phyrexian Reclamation
+\item Profane Tutor
+\item Putrid Imp
+\item Ravenous Rats
+\item Rotlung Reanimator
+\item Shriekmaw
+\item Snuff Out
+\item Terror
+\item Tragic Slip
+\item Twisted Abomination
+\item Unearth
+\item Village Rites
+\item Withered Wretch
+\item Zombie Infestation
+\item Zulaport Cutthroat
+\end{itemize}
+\end{multicols}
+
+\subsection*{Red (50)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Abrade
+\item Anger
+\item Anger of the Gods
+\item Arc Lightning
+\item Avalanche Riders
+\item Ball Lightning
+\item Blasphemous Act
+\item Chaos Warp
+\item Earthquake
+\item Faithless Looting
+\item Fervor
+\item Fiery Temper
+\item Fireblast
+\item Firebolt
+\item Flametongue Kavu
+\item Fling
+\item Goblin Bombardment
+\item Goblin Grenade
+\item Goblin King
+\item Goblin Lackey
+\item Goblin Matron
+\item Goblin Patrol
+\item Goblin Ringleader
+\item Goblin War Drums
+\item Goblin Warchief
+\item Grim Lavamancer
+\item Hammer of Bogardan
+\item Incinerate
+\item Kird Ape
+\item Lightning Bolt
+\item Mogg Conscripts
+\item Mogg Fanatic
+\item Monastery Swiftspear
+\item Pillage
+\item Pyroclasm
+\item Raging Goblin
+\item Rorix Bladewing
+\item Shock
+\item Siege-Gang Commander
+\item Skizzik
+\item Spark Spray
+\item Spellshock
+\item Squee, Goblin Nabob
+\item Starstorm
+\item Stone Rain
+\item Sulfuric Vortex
+\item Thermo-Alchemist
+\item Two-Headed Dragon
+\item Viashino Sandstalker
+\item Young Pyromancer
+\end{itemize}
+\end{multicols}
+
+\subsection*{Green (53)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Acidic Slime
+\item Alpha Status
+\item Ancestral Mask
+\item Avatar of Might
+\item Basking Rootwalla
+\item Beast Within
+\item Birds of Paradise
+\item Blastoderm
+\item Brawn
+\item Call of the Herd
+\item Caller of the Claw
+\item Constant Mists
+\item Elvish Champion
+\item Elvish Spirit Guide
+\item Fecundity
+\item Fyndhorn Elves
+\item Genesis
+\item Giant Growth
+\item Harrow
+\item Krosan Tusker
+\item Lhurgoyf
+\item Llanowar Elves
+\item Naturalize
+\item Nimble Mongoose
+\item Overgrowth
+\item Overrun
+\item Plow Under
+\item Pouncing Jaguar
+\item Priest of Titania
+\item Quirion Ranger
+\item Rampant Growth
+\item Rancor
+\item Ravenous Baloth
+\item River Boa
+\item Roar of the Wurm
+\item Seedborn Muse
+\item Spike Feeder
+\item Sylvan Library
+\item Symbiotic Beast
+\item Thragtusk
+\item Uktabi Orangutan
+\item Verdant Force
+\item Verduran Enchantress
+\item Wall of Blossoms
+\item Wellwisher
+\item Werebear
+\item Wild Growth
+\item Wild Mongrel
+\item Wirewood Herald
+\item Wirewood Symbiote
+\item Worldly Tutor
+\item Yavimaya Elder
+\item Young Wolf
+\end{itemize}
+\end{multicols}
+
+\subsection*{Colorless (40)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Altar of Dementia
+\item Ashnod's Altar
+\item Basalt Monolith
+\item Black Vise
+\item Bottle Gnomes
+\item Burnished Hart
+\item Chief of the Foundry
+\item Chimeric Idol
+\item Contagion Clasp
+\item Darksteel Juggernaut
+\item Fellwar Stone
+\item Foundry Inspector
+\item Gilded Lotus
+\item Grindstone
+\item Hedron Archive
+\item Helm of Awakening
+\item Helm of Possession
+\item Howling Mine
+\item Juggernaut
+\item Junk Diver
+\item Karn, Silver Golem
+\item Lodestone Golem
+\item Lotus Bloom
+\item Lotus Petal
+\item Mazemind Tome
+\item Mesmeric Orb
+\item Mind Stone
+\item Mirrorworks
+\item Myr Battlesphere
+\item Nevinyrral's Disk
+\item Ornithopter
+\item Solemn Simulacrum
+\item Steel Overseer
+\item The Rack
+\item Thran Dynamo
+\item Tormod's Crypt
+\item Triskelion
+\item Voltaic Key
+\item Wurmcoil Engine
+\item Zuran Orb
+\end{itemize}
+\end{multicols}
+
+\subsection*{Multicolored (37)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Absorb
+\item Armadillo Cloak
+\item Baleful Strix
+\item Bladestitched Skaab
+\item Blazing Specter
+\item Bloodtithe Harvester
+\item Chrome Courier
+\item Coiling Oracle
+\item Consume Strength
+\item Edgewalker
+\item Fire // Ice
+\item Fires of Yavimaya
+\item Firestorm Hellkite
+\item Fleshtaker
+\item Gerrard's Verdict
+\item Goblin Anarchomancer
+\item Goblin Electromancer
+\item Goblin Legionnaire
+\item Goblin Trenches
+\item Jungle Barrier
+\item Lightning Helix
+\item Llanowar Dead
+\item Mirari's Wake
+\item Mystic Snake
+\item Orcish Lumberjack
+\item Probe
+\item Prophetic Bolt
+\item Psychatog
+\item Putrefy
+\item Recoil
+\item Sabertooth Nishoba
+\item Spiritmonger
+\item Sterling Grove
+\item Tempest Drake
+\item Temporal Spring
+\item Terminate
+\item Vindicate
+\end{itemize}
+\end{multicols}
+
+\subsection*{Utility Lands (19)}
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Barren Moor
+\item Cephalid Coliseum
+\item Darksteel Citadel
+\item Faerie Conclave
+\item Forbidding Watchtower
+\item Forgotten Cave
+\item Gemstone Mine
+\item Ghitu Encampment
+\item Goblin Burrows
+\item High Market
+\item Lonely Sandbar
+\item Mishra's Factory
+\item Rogue's Passage
+\item Secluded Steppe
+\item Spawning Pool
+\item Stalking Stones
+\item Tranquil Thicket
+\item Treetop Village
+\item Wasteland
+\end{itemize}
+\end{multicols}
+
+\subsection*{Separately-drafted fixing pool (20)}
+\label{tab:fixingpool}
+Ten historical ``pain lands'' (one per ally/enemy color pair) and their corresponding ten guildgates, distributed to drafters via a dedicated secondary land draft rather than mixed into the main packs.
+\begin{multicols}{3}
+\footnotesize
+\begin{itemize}[leftmargin=1em,itemsep=0pt,parsep=0pt]
+\item Adarkar Wastes
+\item Azorius Guildgate
+\item Battlefield Forge
+\item Boros Guildgate
+\item Brushland
+\item Caves of Koilos
+\item Dimir Guildgate
+\item Golgari Guildgate
+\item Gruul Guildgate
+\item Izzet Guildgate
+\item Karplusan Forest
+\item Llanowar Wastes
+\item Orzhov Guildgate
+\item Rakdos Guildgate
+\item Selesnya Guildgate
+\item Shivan Reef
+\item Simic Guildgate
+\item Sulfurous Springs
+\item Underground River
+\item Yavimaya Coast
+\end{itemize}
+\end{multicols}
+
+\end{document}
