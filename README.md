@@ -122,6 +122,29 @@ per-card reliability is corpus-wide and goes stale otherwise.
 | `draft_N/REPORT.md` | `report.py` | Human-readable report for one draft |
 | `SUMMARY.md` | `report.py` | Archetype performance, mono/multi-color split, top/bottom cards, anomalies, limitations — across the whole corpus |
 
+## Case study
+
+[`crosscube_paper/crosscube_paper.pdf`](./crosscube_paper/crosscube_paper.pdf)
+runs this pipeline, unmodified, against five independently designed, publicly
+available CubeCobra cubes spanning nearly the full power-level spectrum used in
+cube drafting — from an all-commons Pauper cube to the Power-9-inclusive MTGO
+Vintage Cube — to test whether a bot-draft-and-simulate pipeline behaves like a
+neutral measurement instrument or carries its own systematic biases. Short
+version: a mono-color win-rate premium and a "simple strategies beat multi-step
+ones" pattern both recur across all five cubes despite them sharing essentially
+no card pool, design philosophy, or power level in common — evidence that some
+of what this kind of pipeline reports as "card power" is a property of the
+pipeline itself. LaTeX source included.
+
+[`crosscube_paper/data/`](./crosscube_paper/data) has, for each of the five
+cubes, all four stages of its own pipeline run: the original CubeCobra
+`*-breakdown-all.csv` export, and the `analysis.json` / `cards.csv` /
+`SUMMARY.md` this repo's scripts produced from it — enough to either recompute
+every number in the paper directly, or feed the raw CSV back through
+`convert_csv.py` onward to regenerate everything from scratch. Re-running the
+pipeline won't reproduce the exact same numbers — Forge's matches aren't
+deterministic — but should land on the same patterns at a similar magnitude.
+
 ## License
 
 MIT — see [LICENSE](./LICENSE).
