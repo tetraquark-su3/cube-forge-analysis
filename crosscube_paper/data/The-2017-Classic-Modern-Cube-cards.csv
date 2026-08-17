@@ -1,0 +1,447 @@
+card_name,games_played,wins,winrate_pct,distinct_drafts,reliable
+Celestial Crusader,98,77,78.57,14,True
+Hidden Dragonslayer,49,37,75.51,7,True
+Spectral Procession,133,100,75.19,19,True
+"Elesh Norn, Grand Cenobite",56,42,75.0,8,True
+Gideon's Lawkeeper,189,140,74.07,27,True
+Archangel of Thune,119,88,73.95,17,True
+Glorious Anthem,161,119,73.91,23,True
+Knight of the White Orchid,203,150,73.89,29,True
+Honor of the Pure,140,103,73.57,20,True
+Hero of Bladehold,217,158,72.81,31,True
+"Isamaru, Hound of Konda",217,157,72.35,31,True
+"Brimaz, King of Oreskos",217,157,72.35,31,True
+Banisher Priest,161,116,72.05,23,True
+Selfless Spirit,224,161,71.88,32,True
+"Kytheon, Hero of Akros",189,135,71.43,27,True
+Legion's Landing,196,139,70.92,28,True
+Vampire Nighthawk,168,119,70.83,24,True
+"Thalia, Guardian of Thraben",217,153,70.51,31,True
+Flickerwisp,175,123,70.29,25,True
+Student of Warfare,140,98,70.0,20,True
+Knight of the Holy Nimbus,140,98,70.0,20,True
+"Mikaeus, the Lunarch",154,107,69.48,22,True
+"Gideon, Ally of Zendikar",224,155,69.2,32,True
+Huntmaster of the Fells,70,48,68.57,10,True
+Stoneforge Mystic,238,163,68.49,34,True
+Angel of Invention,203,139,68.47,29,True
+"Kalitas, Traitor of Ghet",196,134,68.37,28,True
+Seeker of the Way,70,47,67.14,10,True
+Savannah Lions,182,121,66.48,26,True
+Fatal Push,217,144,66.36,31,True
+Lightning Helix,98,65,66.33,14,True
+"Elspeth, Knight-Errant",231,153,66.23,33,True
+Kitesail Freebooter,210,138,65.71,30,True
+Bloodbraid Elf,70,46,65.71,10,True
+Adanto Vanguard,154,101,65.58,22,True
+Skinrender,238,156,65.55,34,True
+Figure of Destiny,217,142,65.44,31,True
+Leonin Relic-Warder,140,91,65.0,20,True
+Banishing Light,168,108,64.29,24,True
+Hero of Oxid Ridge,112,72,64.29,16,True
+"Kari Zev, Skyship Raider",147,94,63.95,21,True
+Spear of Heliod,133,85,63.91,19,True
+Disfigure,224,143,63.84,32,True
+Siege-Gang Commander,105,67,63.81,15,True
+Ravenous Chupacabra,273,174,63.74,39,True
+Oust,154,98,63.64,22,True
+"Elspeth, Sun's Champion",210,133,63.33,30,True
+Hazoret the Fervent,98,62,63.27,14,True
+"Chandra, Fire of Kaladesh",84,53,63.1,12,True
+Crypt Ghast,119,75,63.03,17,True
+Mogg Fanatic,140,88,62.86,20,True
+Steelshaper's Gift,91,57,62.64,13,True
+Stomping Ground,91,57,62.64,13,True
+Lingering Souls,91,57,62.64,13,True
+Pacifism,203,127,62.56,29,True
+Doom Blade,224,140,62.5,32,True
+Zurgo Bellstriker,133,83,62.41,19,True
+Dark Confidant,217,135,62.21,31,True
+Hypnotic Specter,119,74,62.18,17,True
+Sacred Foundry,161,100,62.11,23,True
+Blade Splicer,231,143,61.9,33,True
+Simian Spirit Guide,63,39,61.9,9,True
+Dragonlord Atarka,42,26,61.9,6,True
+Goblin Guide,175,108,61.71,25,True
+Desecration Demon,154,95,61.69,22,True
+"Liliana, the Last Hope",245,151,61.63,35,True
+Hellrider,112,69,61.61,16,True
+Umezawa's Jitte,252,155,61.51,36,True
+Oblivion Ring,126,77,61.11,18,True
+Path to Exile,280,171,61.07,40,True
+Night's Whisper,238,145,60.92,34,True
+Brain Maggot,133,81,60.9,19,True
+"Thrun, the Last Troll",161,98,60.87,23,True
+Massacre Wurm,196,119,60.71,28,True
+"Aurelia, the Warleader",28,17,60.71,4,True
+Shriekmaw,266,161,60.53,38,True
+Ultimate Price,273,165,60.44,39,True
+Sheltered Thicket,91,55,60.44,13,True
+Canyon Slough,154,93,60.39,22,True
+Inspiring Vantage,126,76,60.32,18,True
+Secure the Wastes,133,80,60.15,19,True
+Grim Flayer,140,84,60.0,20,True
+Grave Titan,175,105,60.0,25,True
+Blood Crypt,175,105,60.0,25,True
+Ball Lightning,70,42,60.0,10,True
+"Liliana, Death's Majesty",238,142,59.66,34,True
+Caves of Koilos,119,71,59.66,17,True
+Thraben Inspector,245,146,59.59,35,True
+Bitterblossom,210,125,59.52,30,True
+Grim Lavamancer,168,100,59.52,24,True
+Go for the Throat,231,137,59.31,33,True
+Murderous Cut,196,116,59.18,28,True
+Temple of Malady,168,99,58.93,24,True
+Hellspark Elemental,112,66,58.93,16,True
+Boon Satyr,56,33,58.93,8,True
+Archangel Avacyn,133,78,58.65,19,True
+Goblin Rabblemaster,210,123,58.57,30,True
+Terminate,140,82,58.57,20,True
+Bloodghast,154,90,58.44,22,True
+Monastery Mentor,238,139,58.4,34,True
+Inquisition of Kozilek,238,139,58.4,34,True
+Journey to Nowhere,217,126,58.06,31,True
+Elves of Deep Shadow,245,142,57.96,35,True
+Blackmail,126,73,57.94,18,True
+Dismember,203,117,57.64,29,True
+"Ashiok, Nightmare Weaver",224,129,57.59,32,True
+Birds of Paradise,259,149,57.53,37,True
+Phyrexian Obliterator,140,80,57.14,20,True
+Hornet Queen,182,104,57.14,26,True
+Thragtusk,224,128,57.14,32,True
+Smoldering Marsh,154,88,57.14,22,True
+Pia and Kiran Nalaar,98,56,57.14,14,True
+Mana Tithe,168,96,57.14,24,True
+Godless Shrine,126,72,57.14,18,True
+Bomat Courier,140,80,57.14,20,True
+Rancor,70,40,57.14,10,True
+Kessig Prowler,56,32,57.14,8,True
+Mantis Rider,7,4,57.14,1,False
+Damnation,259,147,56.76,37,True
+Noxious Gearhulk,217,123,56.68,31,True
+Tarmogoyf,189,107,56.61,27,True
+Liliana of the Veil,308,174,56.49,44,True
+Settle the Wreckage,119,67,56.3,17,True
+Scavenging Ooze,224,126,56.25,32,True
+Raging Ravine,112,63,56.25,16,True
+Whip of Erebos,168,94,55.95,24,True
+"Urborg, Tomb of Yawgmoth",245,137,55.92,35,True
+Whisperwood Elemental,161,90,55.9,23,True
+Cryptbreaker,161,90,55.9,23,True
+Loxodon Warhammer,77,43,55.84,11,True
+Rakdos's Return,77,43,55.84,11,True
+Woodland Cemetery,224,125,55.8,32,True
+Renegade Rallier,70,39,55.71,10,True
+Deathrite Shaman,196,109,55.61,28,True
+Dryad Arbor,252,140,55.56,36,True
+Qasali Pridemage,63,35,55.56,9,True
+Duress,182,101,55.49,26,True
+Crib Swap,56,31,55.36,8,True
+Knight of the Reliquary,56,31,55.36,8,True
+Concealed Courtyard,154,85,55.19,22,True
+Blooming Marsh,196,108,55.1,28,True
+Judge's Familiar,140,77,55.0,20,True
+Condemn,175,96,54.86,25,True
+Llanowar Wastes,217,119,54.84,31,True
+Mulldrifter,217,119,54.84,31,True
+Llanowar Elves,252,138,54.76,36,True
+Clifftop Retreat,168,92,54.76,24,True
+Incinerate,252,138,54.76,36,True
+Ajani Vengeant,42,23,54.76,6,True
+Hostage Taker,161,88,54.66,23,True
+Phantasmal Image,119,65,54.62,17,True
+Smuggler's Copter,231,126,54.55,33,True
+Abbot of Keral Keep,189,103,54.5,27,True
+Soul-Scar Mage,245,133,54.29,35,True
+Incendiary Flow,245,133,54.29,35,True
+Kird Ape,35,19,54.29,5,True
+Oracle of Mul Daya,273,148,54.21,39,True
+Verdurous Gearhulk,98,53,54.08,14,True
+Glorybringer,196,106,54.08,28,True
+Kitchen Finks,63,34,53.97,9,True
+Rift Bolt,217,117,53.92,31,True
+Galvanic Blast,154,83,53.9,22,True
+Gatekeeper of Malakir,91,49,53.85,13,True
+Rootbound Crag,91,49,53.85,13,True
+"Chandra, Torch of Defiance",266,143,53.76,38,True
+Temple of Silence,147,79,53.74,21,True
+Sakura-Tribe Elder,259,139,53.67,37,True
+Abrupt Decay,112,60,53.57,16,True
+Burst Lightning,280,150,53.57,40,True
+Dreadbore,112,60,53.57,16,True
+Monastery Swiftspear,217,116,53.46,31,True
+Day of Judgment,189,101,53.44,27,True
+Lotus Cobra,266,142,53.38,38,True
+Razorverge Thicket,133,71,53.38,19,True
+Vendetta,133,71,53.38,19,True
+Courser of Kruphix,210,112,53.33,30,True
+Noble Hierarch,259,138,53.28,37,True
+Oona's Prowler,126,67,53.17,18,True
+Dragonskull Summit,126,67,53.17,18,True
+Wall of Roots,238,126,52.94,34,True
+Verdant Catacombs,280,148,52.86,40,True
+Thoughtseize,252,133,52.78,36,True
+Searing Spear,245,129,52.65,35,True
+Sun Titan,133,70,52.63,19,True
+Wall of Omens,175,92,52.57,25,True
+"Sheoldred, Whispering One",217,114,52.53,31,True
+Pack Rat,259,136,52.51,37,True
+Overgrown Tomb,210,110,52.38,30,True
+Harmonize,84,44,52.38,12,True
+Maelstrom Pulse,105,55,52.38,15,True
+Sword of Feast and Famine,105,55,52.38,15,True
+Collective Brutality,210,110,52.38,30,True
+Garruk Wildspeaker,266,139,52.26,38,True
+Wooded Foothills,231,120,51.95,33,True
+Woodland Bellower,133,69,51.88,19,True
+Wrath of God,189,98,51.85,27,True
+Carnage Tyrant,259,134,51.74,37,True
+Scattered Groves,203,105,51.72,29,True
+Phyrexian Arena,147,76,51.7,21,True
+Sylvan Caryatid,238,123,51.68,34,True
+Primeval Titan,273,141,51.65,39,True
+Dead // Gone,161,83,51.55,23,True
+Chart a Course,196,101,51.53,28,True
+Jace Beleren,231,119,51.52,33,True
+Siege Rhino,35,18,51.43,5,True
+Zombify,189,97,51.32,27,True
+Temple of Triumph,119,61,51.26,17,True
+Collected Company,119,61,51.26,17,True
+Farseek,203,104,51.23,29,True
+Young Pyromancer,287,147,51.22,41,True
+Arid Mesa,217,111,51.15,31,True
+Creeping Tar Pit,266,136,51.13,38,True
+Windswept Heath,231,118,51.08,33,True
+The Scarab God,210,107,50.95,30,True
+Blackcleave Cliffs,175,89,50.86,25,True
+Temple Garden,189,96,50.79,27,True
+Restoration Angel,189,96,50.79,27,True
+Isolated Chapel,189,96,50.79,27,True
+Chord of Calling,126,64,50.79,18,True
+Kolaghan's Command,126,64,50.79,18,True
+Birthing Pod,140,71,50.71,20,True
+Battlefield Forge,154,78,50.65,22,True
+Eternal Witness,245,124,50.61,35,True
+Shadowmage Infiltrator,182,92,50.55,26,True
+Craterhoof Behemoth,252,127,50.4,36,True
+Bribery,252,127,50.4,36,True
+Lightning Axe,147,74,50.34,21,True
+Arc Trail,203,102,50.25,29,True
+Watery Grave,245,123,50.2,35,True
+Green Sun's Zenith,287,144,50.17,41,True
+Dread Return,154,77,50.0,22,True
+Plow Under,168,84,50.0,24,True
+Reclamation Sage,252,126,50.0,36,True
+"Tasigur, the Golden Fang",168,84,50.0,24,True
+Avacyn's Pilgrim,238,119,50.0,34,True
+Biomass Mutation,42,21,50.0,6,True
+Porcelain Legionnaire,259,129,49.81,37,True
+Hero's Downfall,231,115,49.78,33,True
+Disallow,203,101,49.75,29,True
+Twisted Abomination,189,94,49.74,27,True
+Fauna Shaman,189,94,49.74,27,True
+Sword of Fire and Ice,147,73,49.66,21,True
+Griselbrand,196,97,49.49,28,True
+Cinder Glade,91,45,49.45,13,True
+Search for Azcanta,217,107,49.31,31,True
+Lightning Bolt,266,131,49.25,38,True
+Joraga Treespeaker,273,134,49.08,39,True
+Bloodstained Mire,210,103,49.05,30,True
+Thing in the Ice,196,96,48.98,28,True
+Rhonas the Indomitable,147,72,48.98,21,True
+Diabolic Tutor,147,72,48.98,21,True
+Flame Slash,231,113,48.92,33,True
+Woodfall Primus,231,113,48.92,33,True
+Canopy Vista,133,65,48.87,19,True
+Condescend,203,99,48.77,29,True
+Ashen Rider,119,58,48.74,17,True
+Acidic Slime,210,102,48.57,30,True
+City of Brass,35,17,48.57,5,True
+Drowned Catacomb,245,118,48.16,35,True
+Goryo's Vengeance,133,64,48.12,19,True
+Master of the Wild Hunt,133,64,48.12,19,True
+Shock,252,121,48.02,36,True
+Delver of Secrets,175,84,48.0,25,True
+Logic Knot,217,104,47.93,31,True
+Devil's Play,119,57,47.9,17,True
+Utopia Sprawl,259,124,47.88,37,True
+Fertile Ground,224,107,47.77,32,True
+Botanical Sanctum,147,70,47.62,21,True
+Char,126,60,47.62,18,True
+Tidehollow Sculler,105,50,47.62,15,True
+"Jace, the Mind Sculptor",259,123,47.49,37,True
+Snapcaster Mage,259,123,47.49,37,True
+"Ghalta, Primal Hunger",175,83,47.43,25,True
+Temple of Mystery,133,63,47.37,19,True
+Marsh Flats,252,119,47.22,36,True
+Frost Titan,140,66,47.14,20,True
+Horizon Canopy,140,66,47.14,20,True
+Dig Through Time,217,102,47.0,31,True
+Shrapnel Blast,49,23,46.94,7,True
+Krosan Grip,49,23,46.94,7,True
+Summoner's Pact,77,36,46.75,11,True
+Makeshift Mannequin,154,72,46.75,22,True
+Misty Rainforest,266,124,46.62,38,True
+Eldritch Evolution,161,75,46.58,23,True
+Faithless Looting,245,114,46.53,35,True
+Remand,280,130,46.43,40,True
+Treasure Cruise,238,110,46.22,34,True
+Goblin Dark-Dwellers,91,42,46.15,13,True
+Hinterland Harbor,154,71,46.1,22,True
+Sphinx's Revelation,154,71,46.1,22,True
+Sunken Hollow,217,100,46.08,31,True
+Bedlam Reveler,189,87,46.03,27,True
+Geist of Saint Traft,126,58,46.03,18,True
+Dissolve,238,109,45.8,34,True
+Elvish Piper,175,80,45.71,25,True
+Censor,245,112,45.71,35,True
+Unburial Rites,175,80,45.71,25,True
+Zealous Conscripts,245,112,45.71,35,True
+Mind Shatter,35,16,45.71,5,True
+Treetop Village,224,102,45.54,32,True
+Hallowed Fountain,266,121,45.49,38,True
+Remove Soul,203,92,45.32,29,True
+Fetid Pools,252,114,45.24,36,True
+Irrigated Farmland,175,79,45.14,25,True
+Opt,252,113,44.84,36,True
+Sower of Temptation,154,69,44.81,22,True
+"Venser, Shaper Savant",217,97,44.7,31,True
+Inkmoth Nexus,273,122,44.69,39,True
+Tireless Tracker,280,125,44.64,40,True
+Skullclamp,224,100,44.64,32,True
+Batterskull,196,87,44.39,28,True
+Prairie Stream,196,87,44.39,28,True
+Glen Elendra Archmage,210,93,44.29,30,True
+Tarfire,210,93,44.29,30,True
+Time Warp,245,108,44.08,35,True
+Breeding Pool,182,80,43.96,26,True
+Heir of Falkenrath,91,40,43.96,13,True
+Repeal,196,86,43.88,28,True
+Mystic Snake,98,43,43.88,14,True
+Consecrated Sphinx,203,89,43.84,29,True
+Glacial Fortress,210,92,43.81,30,True
+Negate,231,101,43.72,33,True
+Pyrite Spellbomb,126,55,43.65,18,True
+Spell Queller,161,70,43.48,23,True
+Abrade,238,103,43.28,34,True
+Cryptic Command,252,109,43.25,36,True
+Polluted Delta,266,115,43.23,38,True
+Wurmcoil Engine,224,96,42.86,32,True
+Looter il-Kor,119,51,42.86,17,True
+Mana Confluence,49,21,42.86,7,True
+Talisman of Impulse,49,21,42.86,7,True
+Vampire Hexmage,77,33,42.86,11,True
+Naturalize,42,18,42.86,6,True
+Murmuring Bosk,49,21,42.86,7,True
+Serum Visions,273,116,42.49,39,True
+Torrential Gearhulk,259,110,42.47,37,True
+Stormchaser Mage,217,92,42.4,31,True
+Riftwing Cloudskate,182,77,42.31,26,True
+Boomerang,154,65,42.21,22,True
+"Ulamog, the Ceaseless Hunger",140,59,42.14,20,True
+Ponder,259,109,42.08,37,True
+Scalding Tarn,238,100,42.02,34,True
+Inferno Titan,154,64,41.56,22,True
+Celestial Colonnade,273,113,41.39,39,True
+Vendilion Clique,252,104,41.27,36,True
+Earthquake,126,52,41.27,18,True
+"Jace, Vryn's Prodigy",245,101,41.22,35,True
+"Ulamog, the Infinite Gyre",119,49,41.18,17,True
+Bloodwater Entity,161,66,40.99,23,True
+"Kiki-Jiki, Mirror Breaker",238,97,40.76,34,True
+Shelldock Isle,280,114,40.71,40,True
+Pact of Negation,224,91,40.62,32,True
+"Talrand, Sky Summoner",133,54,40.6,19,True
+Preordain,259,105,40.54,37,True
+Terramorphic Expanse,161,65,40.37,23,True
+Deceiver Exarch,196,79,40.31,28,True
+Cyclonic Rift,259,104,40.15,37,True
+Talisman of Dominance,252,101,40.08,36,True
+Yavimaya Coast,140,56,40.0,20,True
+Mana Leak,273,109,39.93,39,True
+Sulfur Falls,231,92,39.83,33,True
+Dark Petition,98,39,39.8,14,True
+Evolving Wilds,175,69,39.43,25,True
+Gitaxian Probe,203,80,39.41,29,True
+Shivan Reef,203,80,39.41,29,True
+Commit // Memory,224,88,39.29,32,True
+Spirebluff Canal,224,88,39.29,32,True
+Ingot Chewer,56,22,39.29,8,True
+Commune with Nature,56,22,39.29,8,True
+Spell Pierce,189,74,39.15,27,True
+Flooded Strand,259,101,39.0,37,True
+Steam Vents,294,114,38.78,42,True
+Coiling Oracle,70,27,38.57,10,True
+Disenchant,70,27,38.57,10,True
+Electrolyze,189,72,38.1,27,True
+Ancestral Vision,203,77,37.93,29,True
+Pestermite,238,90,37.82,34,True
+Temple of Epiphany,217,82,37.79,31,True
+Vedalken Shackles,259,97,37.45,37,True
+Lightning Greaves,91,34,37.36,13,True
+Talisman of Indulgence,91,34,37.36,13,True
+Chrome Mox,252,94,37.3,36,True
+Izzet Charm,189,70,37.04,27,True
+Splinter Twin,196,72,36.73,28,True
+Street Wraith,77,28,36.36,11,True
+"Kiora, Master of the Depths",105,38,36.19,15,True
+Beast Within,133,48,36.09,19,True
+Sleight of Hand,217,78,35.94,31,True
+Manamorphose,112,40,35.71,16,True
+Quicksilver Amulet,70,25,35.71,10,True
+Leatherback Baloth,14,5,35.71,2,True
+Pyroclasm,119,42,35.29,17,True
+"Emrakul, the Aeons Torn",119,42,35.29,17,True
+Unsummon,168,59,35.12,24,True
+Phyrexian Metamorph,217,76,35.02,31,True
+Vault Skirge,140,49,35.0,20,True
+Hangarback Walker,140,49,35.0,20,True
+Talisman of Progress,224,78,34.82,32,True
+Cruel Ultimatum,49,17,34.69,7,True
+Ornithopter,147,51,34.69,21,True
+Relic of Progenitus,84,29,34.52,12,True
+Ratchet Bomb,105,36,34.29,15,True
+Gilded Lotus,119,40,33.61,17,True
+Walking Ballista,140,47,33.57,20,True
+Sphinx of the Steel Wind,126,42,33.33,18,True
+Cranial Plating,189,63,33.33,27,True
+Arcbound Ravager,203,67,33.0,29,True
+Mox Opal,252,83,32.94,36,True
+Coalition Relic,182,59,32.42,26,True
+Mishra's Bauble,175,56,32.0,25,True
+Myr Battlesphere,196,62,31.63,28,True
+Inventors' Fair,294,93,31.63,42,True
+Solemn Simulacrum,210,66,31.43,30,True
+Master of Etherium,175,55,31.43,25,True
+Etched Champion,182,57,31.32,26,True
+Sundering Titan,161,50,31.06,23,True
+Phyrexian Revoker,168,52,30.95,24,True
+Ensoul Artifact,168,52,30.95,24,True
+Steel Overseer,196,60,30.61,28,True
+Chromatic Lantern,112,34,30.36,16,True
+Trash for Treasure,70,21,30.0,10,True
+Karn Liberated,154,46,29.87,22,True
+Sword of the Meek,175,52,29.71,25,True
+Frogmite,175,52,29.71,25,True
+"Skysovereign, Consul Flagship",119,35,29.41,17,True
+Icy Manipulator,133,39,29.32,19,True
+Tezzeret the Seeker,196,57,29.08,28,True
+Lodestone Golem,259,74,28.57,37,True
+Reciprocate,7,2,28.57,1,False
+Thopter Foundry,196,55,28.06,28,True
+Springleaf Drum,161,44,27.33,23,True
+Cathartic Reunion,63,17,26.98,9,True
+Aether Spellbomb,210,56,26.67,30,True
+Sensei's Divining Top,245,65,26.53,35,True
+Inkwell Leviathan,203,52,25.62,29,True
+Chromatic Sphere,168,43,25.6,24,True
+Crystal Shard,91,23,25.27,13,True
+Lotus Bloom,84,21,25.0,12,True
+Through the Breach,77,19,24.68,11,True
+Myr Enforcer,182,44,24.18,26,True
+Chromatic Star,175,42,24.0,25,True
+Mindslaver,168,40,23.81,24,True
+Scarecrone,105,25,23.81,15,True
+Blightsteel Colossus,196,46,23.47,28,True
+Hedron Archive,161,35,21.74,23,True
+Everflowing Chalice,189,41,21.69,27,True
